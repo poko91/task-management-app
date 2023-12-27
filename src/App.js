@@ -12,11 +12,7 @@ function App() {
     const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
 
     return (
-      <DragDropContext
-        onDragEnd={() => {
-          console.log("drag drop event occurred");
-        }}
-      >
+      <DragDropContext onDragEnd={() => {}}>
         <div>
           <Column key={column.id} column={column} tasks={tasks} />
         </div>
