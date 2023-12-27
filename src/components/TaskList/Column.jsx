@@ -12,7 +12,7 @@ const Title = styled.h3`
   padding: 1rem;
   font-family: "Poppins", sans-serif;
 `;
-const TaskList = styled.div`
+const TaskList = styled.ul`
   padding: 1rem;
 `;
 
@@ -23,16 +23,12 @@ const Column = (props) => {
         <Title>{props.column.title}</Title>
         <Droppable droppableId={props.column.id}>
           {(provided) => (
-            <ul>
-              <TaskList innerRef={provided.innerRef} {...provided.droppableProps}>
-                {props.tasks.map((task, index) => (
-                  <li>
-                    <Task key={task.id} task={task} index={index} />
-                  </li>
-                ))}
-                {provided.placeholder}
-              </TaskList>
-            </ul>
+            <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+              {props.tasks.map((task, index) => (
+                <Task key={task.id} task={task} index={index} />
+              ))}
+              {provided.placeholder}
+            </TaskList>
           )}
         </Droppable>
       </Container>
