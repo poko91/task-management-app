@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./index.css";
+import { DragDropContext } from "react-beautiful-dnd";
 import initialData from "./data/initial-data";
 import Column from "./components/TaskList/Column";
 
@@ -11,9 +12,15 @@ function App() {
     const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
 
     return (
-      <div>
-        <Column key={column.id} column={column} tasks={tasks} />
-      </div>
+      <DragDropContext
+        onDragEnd={() => {
+          console.log("drag drop event occurred");
+        }}
+      >
+        <div>
+          <Column key={column.id} column={column} tasks={tasks} />
+        </div>
+      </DragDropContext>
     );
   });
 }
