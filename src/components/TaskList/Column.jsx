@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Task from "./Task";
+import { Droppable } from "react-beautiful-dnd";
 
 const Container = styled.div`
   margin: 0.625rem;
@@ -9,6 +10,7 @@ const Container = styled.div`
 `;
 const Title = styled.h3`
   padding: 1rem;
+  font-family: "Poppins", sans-serif;
 `;
 const TaskList = styled.div`
   padding: 1rem;
@@ -19,11 +21,16 @@ const Column = (props) => {
     <div>
       <Container>
         <Title>{props.column.title}</Title>
-        <TaskList>
-          {props.tasks.map((task) => (
-            <Task key={task.id} task={task} />
-          ))}
-        </TaskList>
+        <Droppable droppableId={props.column.id}>
+          {(provided) => (
+            <TaskList innerRef={provided.innerRef} {...provided.droppableProps}>
+              {props.tasks.map((task) => (
+                <Task key={task.id} task={task} />
+              ))}
+              {provided.placeholder}
+            </TaskList>
+          )}
+        </Droppable>
       </Container>
     </div>
   );
