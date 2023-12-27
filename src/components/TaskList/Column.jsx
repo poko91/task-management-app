@@ -25,9 +25,9 @@ const Column = (props) => {
           {(provided) => (
             <ul>
               <TaskList innerRef={provided.innerRef} {...provided.droppableProps}>
-                {props.tasks.map((task) => (
+                {props.tasks.map((task, index) => (
                   <li>
-                    <Task key={task.id} task={task} />
+                    <Task key={task.id} task={task} index={index} />
                   </li>
                 ))}
                 {provided.placeholder}
