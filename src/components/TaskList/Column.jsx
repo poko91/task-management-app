@@ -7,10 +7,13 @@ const Container = styled.div`
   background-color: #eef2f5;
   border: 1px solid lightgray;
   border-radius: 0.5rem;
+  min-height: 100%;
 `;
 const Title = styled.h3`
   padding: 1rem;
   font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
 `;
 const TaskList = styled.ul`
   padding: 1rem;

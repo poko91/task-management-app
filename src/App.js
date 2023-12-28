@@ -1,24 +1,11 @@
-import { useState } from "react";
-import "./index.css";
-import { DragDropContext } from "react-beautiful-dnd";
-import initialData from "./data/initial-data";
-import Column from "./components/TaskList/Column";
+import Board from "./pages/Board";
 
-function App() {
-  const [state] = useState(initialData);
-
-  return state.columnOrder.map((columnId) => {
-    const column = state.columns[columnId];
-    const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-
-    return (
-      <DragDropContext onDragEnd={() => {}}>
-        <div>
-          <Column key={column.id} column={column} tasks={tasks} />
-        </div>
-      </DragDropContext>
-    );
-  });
-}
+const App = () => {
+  return (
+    <div>
+      <Board />
+    </div>
+  );
+};
 
 export default App;
