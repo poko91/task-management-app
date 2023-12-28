@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
-import AddButton from "./AddTask";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -34,6 +33,7 @@ const CloseButton = styled.div`
   right: 0;
   transform: translateY(-100%);
   padding: 0.5rem;
+  background-color: #eef5fe;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@ const FormTitle = styled.h2`
   font-size: 1rem;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const Form = styled.div`
@@ -76,8 +76,8 @@ const Form = styled.div`
 `;
 
 const Submit = styled.button`
-  margin-top: 1rem;
-  font-size: 1em;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 300;
   font-family: "Poppins", sans-serif;
   padding: 0.25em 1em;
@@ -89,37 +89,41 @@ const Submit = styled.button`
   }
 `;
 
-const AddTaskModal = (props) => {
+const AddTaskModal = ({ modalOpen, setModalOpen }) => {
   return (
-    <Wrapper>
-      <Container>
-        <CloseButton>
-          <MdClose size={25} />
-        </CloseButton>
-        <Form>
-          <form>
-            <FormTitle>Add Task</FormTitle>
-            <label htmlFor="title">
-              Title
-              <input type="text" id="title" />
-            </label>
-            <label htmlFor="content">
-              Content
-              <textarea type="text" id="content" />
-            </label>
-            <label htmlFor="priority">
-              Priority
-              <select name="priority" id="priority">
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-              </select>
-            </label>
-          </form>
-          <Submit type="submit">Add Task</Submit>
-        </Form>
-      </Container>
-    </Wrapper>
+    <>
+      {modalOpen && (
+        <Wrapper>
+          <Container>
+            <CloseButton onClick={() => setModalOpen(false)}>
+              <MdClose size={25} />
+            </CloseButton>
+            <Form>
+              <form>
+                <FormTitle>Add Task</FormTitle>
+                <label htmlFor="title">
+                  Title
+                  <input type="text" id="title" />
+                </label>
+                <label htmlFor="content">
+                  Content
+                  <textarea type="text" id="content" />
+                </label>
+                <label htmlFor="priority">
+                  Priority
+                  <select name="priority" id="priority">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </label>
+              </form>
+              <Submit type="submit">Add Task</Submit>
+            </Form>
+          </Container>
+        </Wrapper>
+      )}
+    </>
   );
 };
 

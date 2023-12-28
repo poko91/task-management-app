@@ -2,6 +2,7 @@ import TaskList from "../components/TaskList/TaskList";
 import styled from "styled-components";
 import AddTask from "../components/CreateTask/AddTask";
 import AddTaskModal from "../components/CreateTask/AddTaskModal";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -22,12 +23,14 @@ const Title = styled.h1`
 `;
 
 const Board = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <Container>
       <Wrapper>
         <Title>Board</Title>
-        <AddTask />
-        <AddTaskModal />
+        <AddTask setModalOpen={setModalOpen} />
+        <AddTaskModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       </Wrapper>
       <TaskList />
     </Container>

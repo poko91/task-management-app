@@ -14,8 +14,8 @@ export const AddButton = styled.button`
   }
 `;
 
-const AddTask = () => {
-  return <AddButton>Add Task</AddButton>;
+const AddTask = ({ setModalOpen }) => {
+  return <AddButton onClick={() => setModalOpen(true)}>Add Task</AddButton>;
 };
 
 export default AddTask;
