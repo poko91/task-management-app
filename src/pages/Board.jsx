@@ -1,23 +1,39 @@
-import { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import initialData from "../data/initial-data";
-import Column from "../components/TaskList/Column";
+import TaskList from "../components/TaskList/TaskList";
 import styled from "styled-components";
+import { DragDropContext } from "react-beautiful-dnd";
+import AddTask from "../components/CreateTask/AddTask";
+import AddTaskModal from "../components/CreateTask/AddTaskModal";
+import initialData from "../data/initial-data";
+import { useState } from "react";
 
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Title = styled.h1`
+  font-size: 1.2rem;
+  padding: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
 `;
 
 const Board = () => {
-  const [store, setStore] = useState(initialData);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [tasks, setTasks] = useState(initialData);
 
   const handleDragDrop = (result) => {
     const { source, destination, draggableId } = result;
     if (!destination) return;
 
-    const startColumn = store.columns[source.droppableId];
-    const finishColumn = store.columns[destination.droppableId];
+    const startColumn = tasks.columns[source.droppableId];
+    const finishColumn = tasks.columns[destination.droppableId];
 
     // Dragging within the same column
     if (startColumn === finishColumn) {
@@ -30,15 +46,15 @@ const Board = () => {
         taskIds: newTaskIds,
       };
 
-      const newStore = {
-        ...store,
+      const newtasks = {
+        ...tasks,
         columns: {
-          ...store.columns,
+          ...tasks.columns,
           [newColumn.id]: newColumn,
         },
       };
 
-      setStore(newStore);
+      setTasks(newtasks);
     } else {
       // Moving to a different column
       const startTaskIds = Array.from(startColumn.taskIds);
@@ -55,28 +71,50 @@ const Board = () => {
         taskIds: finishTaskIds,
       };
 
-      const newStore = {
-        ...store,
+      const newtasks = {
+        ...tasks,
         columns: {
-          ...store.columns,
+          ...tasks.columns,
           [newStart.id]: newStart,
           [newFinish.id]: newFinish,
         },
       };
-      setStore(newStore);
+      setTasks(newtasks);
     }
   };
 
+  const addTaskToColumn = (newTask) => {
+    const newTaskId = `task-${Object.keys(tasks.tasks).length + 1}`;
+    const newTasks = {
+      ...tasks.tasks,
+      [newTaskId]: { id: newTaskId, ...newTask },
+    };
+    const updatedTasks = {
+      ...tasks,
+      tasks: newTasks,
+      columns: {
+        ...tasks.columns,
+        ["column-1"]: {
+          ...tasks.columns["column-1"],
+          taskIds: [...tasks.columns["column-1"].taskIds, newTaskId],
+        },
+      },
+    };
+
+    setTasks(updatedTasks);
+  };
+
   return (
-    <DragDropContext onDragEnd={handleDragDrop}>
-      <Container>
-        {store.columnOrder.map((columnId) => {
-          const column = store.columns[columnId];
-          const tasks = column.taskIds.map((taskId) => store.tasks[taskId]);
-          return <Column key={column.id} column={column} tasks={tasks} />;
-        })}
-      </Container>
-    </DragDropContext>
+    <Container>
+      <Wrapper>
+        <Title>Board</Title>
+        <AddTask setModalOpen={setModalOpen} />
+        <AddTaskModal modalOpen={modalOpen} setModalOpen={setModalOpen} addTaskToColumn={addTaskToColumn} />
+      </Wrapper>
+      <DragDropContext onDragEnd={handleDragDrop}>
+        <TaskList tasks={tasks} />
+      </DragDropContext>
+    </Container>
   );
 };
 
