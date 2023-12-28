@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
+import Datepicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -94,6 +96,7 @@ const Submit = styled.button`
 const AddTaskModal = ({ modalOpen, setModalOpen, addTaskToColumn }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [due_date, setDueDate] = useState(new Date());
   const [priority, setPriority] = useState("High");
 
   const handleSubmit = (e) => {
@@ -107,12 +110,13 @@ const AddTaskModal = ({ modalOpen, setModalOpen, addTaskToColumn }) => {
     const newTask = {
       title,
       content,
+      due_date,
       priority,
     };
 
     addTaskToColumn(newTask);
 
-    console.log({ title, content, priority });
+    console.log({ title, content, due_date, priority });
     setModalOpen(false);
     setTitle("");
     setContent("");
@@ -143,6 +147,12 @@ const AddTaskModal = ({ modalOpen, setModalOpen, addTaskToColumn }) => {
               <label htmlFor="content">
                 Content
                 <textarea type="text" id="content" value={content} onChange={(e) => setContent(e.target.value)} />
+              </label>
+              <label htmlFor="due_date">
+                Due date
+                <div>
+                  <Datepicker selected={due_date} onChange={(date) => setDueDate(date)} dateFormat="dd/MM/yyyy" minDate={new Date()} />
+                </div>
               </label>
               <label htmlFor="priority">
                 Priority
