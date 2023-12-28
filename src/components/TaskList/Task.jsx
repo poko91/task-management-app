@@ -53,7 +53,7 @@ const Task = (props) => {
         <Container {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
           <Wrapper>
             <Priority task={props.task}>{props.task.priority}</Priority>
-            <DueDate>{props.task.due_date}</DueDate>
+            <DueDate>{props.task.due_date.toLocaleDateString()}</DueDate>
           </Wrapper>
           <Title>{props.task.title}</Title>
           <Content>{props.task.content}</Content>
