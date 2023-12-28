@@ -1,4 +1,3 @@
-// AddTaskModal.jsx
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
@@ -111,7 +110,6 @@ const AddTaskModal = ({ modalOpen, setModalOpen, addTaskToColumn }) => {
       priority,
     };
 
-    // Call the callback function to add the new task
     addTaskToColumn(newTask);
 
     console.log({ title, content, priority });
