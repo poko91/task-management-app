@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import AddTask from "../components/CreateTask/AddTask";
 import AddTaskModal from "../components/CreateTask/AddTaskModal";
+import PriorityFilter from "../components/TaskList/PriorityFilter";
 import initialData from "../data/initial-data";
 import { useState } from "react";
 
@@ -27,6 +28,8 @@ const Title = styled.h1`
 const Board = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tasks, setTasks] = useState(initialData);
+
+  const [filter, setFilter] = useState("");
 
   const handleDragDrop = (result) => {
     const { source, destination, draggableId } = result;
@@ -107,12 +110,15 @@ const Board = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>Board</Title>
-        <AddTask setModalOpen={setModalOpen} />
+        <Title>Task Board</Title>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <AddTask setModalOpen={setModalOpen} />
+          <PriorityFilter filter={filter} setFilter={setFilter} />
+        </div>
         <AddTaskModal modalOpen={modalOpen} setModalOpen={setModalOpen} addTaskToColumn={addTaskToColumn} />
       </Wrapper>
       <DragDropContext onDragEnd={handleDragDrop}>
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} filter={filter} />
       </DragDropContext>
     </Container>
   );
