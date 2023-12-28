@@ -1,5 +1,8 @@
+// AddTaskModal.jsx
+import React, { useState } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
+import toast, { Toaster } from "react-hot-toast";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -89,41 +92,75 @@ const Submit = styled.button`
   }
 `;
 
-const AddTaskModal = ({ modalOpen, setModalOpen }) => {
+const AddTaskModal = ({ modalOpen, setModalOpen, addTaskToColumn }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [priority, setPriority] = useState("High");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (title === "" || content === "") {
+      toast.error("Please enter both title and content");
+      return;
+    }
+
+    // New task object
+    const newTask = {
+      title,
+      content,
+      priority,
+    };
+
+    // Call the callback function to add the new task
+    addTaskToColumn(newTask);
+
+    console.log({ title, content, priority });
+    setModalOpen(false);
+    setTitle("");
+    setContent("");
+    setPriority("High");
+  };
+
   return (
-    <>
-      {modalOpen && (
-        <Wrapper>
-          <Container>
-            <CloseButton onClick={() => setModalOpen(false)}>
-              <MdClose size={25} />
-            </CloseButton>
-            <Form>
-              <form>
-                <FormTitle>Add Task</FormTitle>
-                <label htmlFor="title">
-                  Title
-                  <input type="text" id="title" />
-                </label>
-                <label htmlFor="content">
-                  Content
-                  <textarea type="text" id="content" />
-                </label>
-                <label htmlFor="priority">
-                  Priority
-                  <select name="priority" id="priority">
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                  </select>
-                </label>
-              </form>
+    modalOpen && (
+      <Wrapper>
+        <Container>
+          <CloseButton
+            onClick={() => {
+              setModalOpen(false);
+              setTitle("");
+              setContent("");
+              setPriority("High");
+            }}
+          >
+            <MdClose size={25} />
+          </CloseButton>
+          <Form>
+            <form onSubmit={handleSubmit}>
+              <FormTitle>Add Task</FormTitle>
+              <label htmlFor="title">
+                Title
+                <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+              </label>
+              <label htmlFor="content">
+                Content
+                <textarea type="text" id="content" value={content} onChange={(e) => setContent(e.target.value)} />
+              </label>
+              <label htmlFor="priority">
+                Priority
+                <select name="priority" id="priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </label>
               <Submit type="submit">Add Task</Submit>
-            </Form>
-          </Container>
-        </Wrapper>
-      )}
-    </>
+            </form>
+          </Form>
+        </Container>
+        <Toaster position="top-center" reverseOrder={false} />
+      </Wrapper>
+    )
   );
 };
 
