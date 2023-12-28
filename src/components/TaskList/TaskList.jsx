@@ -1,4 +1,3 @@
-// TaskList.jsx
 import React from "react";
 import Column from "./Column";
 import styled from "styled-components";
