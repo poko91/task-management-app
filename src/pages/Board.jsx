@@ -1,6 +1,7 @@
 import TaskList from "../components/TaskList/TaskList";
 import styled from "styled-components";
 import AddTask from "../components/CreateTask/AddTask";
+import AddTaskModal from "../components/CreateTask/AddTaskModal";
 
 const Container = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ const Board = () => {
       <Wrapper>
         <Title>Board</Title>
         <AddTask />
+        <AddTaskModal />
       </Wrapper>
       <TaskList />
     </Container>
