@@ -75,6 +75,7 @@ const Form = styled.div`
       border: 1px solid lightgray;
       border-radius: 10px;
       font-size: 0.9rem;
+      font-family: "Poppins", sans-serif;
     }
   }
 `;
