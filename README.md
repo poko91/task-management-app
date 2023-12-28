@@ -1,5 +1,7 @@
 # React Task Management App
 
+<img width="1264" alt="Screenshot 2023-12-28 at 6 19 48 PM" src="https://github.com/poko91/task-management-app/assets/82212882/7b97ae8a-2873-4ed2-a87b-7c8d333e6d81">
+
 ## Introduction
 
 This is a simple task management application built with React. The application allows users to add tasks, organize them into different categories (Added, Started, Completed), and implement drag-and-drop functionality to reorder tasks within each category.
